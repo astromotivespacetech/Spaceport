@@ -1,6 +1,6 @@
 # https://www.govinfo.gov/content/pkg/CFR-2012-title14-vol4/pdf/CFR-2012-title14-vol4-part420-appA.pdf
 
-from math import pi, sin, cos, asin, acos, tan, atan
+from math import pi, sin, cos, asin, acos, tan, atan, degrees, radians
 π = pi
 
 # Appendix A to Part 420 - Method for Defining a Flight Corridor
@@ -70,82 +70,80 @@ S = 5000
 # nm from the launch point on an azimuth bearing (α12) degrees.
 
 
-# f = 1 − b/a (Equation A1)
-
 # where:
 # a = WGS-84 semi-major axis (3443.91846652 nmi)
 # b = WGS-84 semi-minor axis (3432.37165994 nmi)
 a = 3443.91846652
 b = 3432.37165994
 
+# (Equation A1)
 f = 1 - b/a
 
-# ε^2 = (a^2−b^2)/b^2 (Equation A2)
+# (Equation A2)
 ε = ((a**2-b**2)/b**2)**0.5
 
-# Ø = S/b (radians) (Equation A3)
+# (Equation A3)
 Ø = S/b
 
-# β;1 = tan^−1[(b·sin⁡Φ1)(a·cos⁡Φ1)] (Equation A4)
+# (Equation A4)
 β1 = atan( (b*sin(Φ1)) * (a*cos(Φ1)) )
 
-# g = (cos⁡β1)(cosα12) (Equation A5)
+# (Equation A5)
 g = cos(β1)*cos(α12)
 
-# ℎ = (cosβ1)(sinα12) (Equation A6
+# (Equation A6)
 ℎ = cos(β1)*sin(α12)
 
-# m = [1+(ε^2/2)sin^⁡2β1][1−ℎ^2]/2 (Equation A7)
+# (Equation A7)
 m = ( (1 + (ε**2/2) * sin(β1)**2) * (1 - ℎ**2) ) / 2
 
-# n = [1+(ε^2/2)sin^⁡2β1][(sin⁡^2β1)(cos⁡Ø)+g·(sin⁡β1)(sin⁡⁡Ø)]/2 (Equation A8)
+# (Equation A8)
 n = ( (1 + (ε**2/2) * sin(β1)**2) * (sin(β1)**2 * cos(Ø) + (g * sin(β1) * sin(Ø)) ) ) / 2
 
-# L = ℎ·[−f·Ø+3·f^2·n·sin⁡Ø+(3·f^2·m·(Ø−sin⁡Ø·cos⁡Ø))/2] (radians) (Equation A9)
+# (Equation A9)
 L = ℎ * (-f * Ø + 3 * f**2 * n * sin(Ø) + ((3 * f**2 * m * (Ø-sin(Ø)*cos(Ø))) / 2)  )
 
-# M = m·ε^2 (Equation A10)
+# (Equation A10)
 M = m * ε**2
 
-# N = n·ε^2 (Equation A11)
+# (Equation A11)
 N = n * ε**2
 
-# A1 = N·sin⁡Ø (Equation A12)
+# (Equation A12)
 A1 = N * sin(Ø)
 
-# A2 = (M/2)(sin⁡⁡Ø×cos⁡⁡Ø−⁡Ø) (Equation A13)
+# (Equation A13)
 A2 = (M/2) * (sin(Ø) * cos(Ø) - Ø)
 
-# A3 = (5/2)(N^2·sin⁡Ø×cos⁡Ø) (Equation A14)
+# (Equation A14)
 A3 = (5/2) * (N**2 * sin(Ø) * cos(0))
 
-# A4 = (M^2/16)(11·Ø−13·sin⁡Ø·cos⁡Ø−8·Ø·cos⁡^2Ø+10·sin⁡Ø·cos^⁡3Ø) (Equation A15)
+# (Equation A15)
 A4 = (M**2/16) * (11 * Ø - 13 * sin(Ø) * cos(Ø) - 8 * cos(Ø)**2 + 10 * sin(Ø) * cos(Ø)**3)
 
-# A5 = ((M·N)/2)(3·sin⁡Ø+2·Ø·cos⁡Ø−5·sin⁡Ø·cos⁡^2Ø)(Equation A16)
+# (Equation A16)
 A5 = (M*N/2) * (3 * sin(Ø) + 2 * Ø * cos(Ø) - 5 * sin(Ø) * cos(Ø)**2)
 
-# δ = Ø−A1+A2+A3+A4+XA5 (radians) (Equation A17)
+# (Equation A17)
 δ = Ø - A1 + A2 + A3 + A4 + A5
 
-# sin⁡β2 = sin⁡β1·cos⁡δ+g·sin⁡δ (Equation A18)
+# (Equation A18)
 β2 = asin( sin(β1) * cos(δ) + g * sin(δ) )
 
-# cos⁡β2 = [ℎ^2+(g·cos⁡δ−sin⁡β1·sin⁡⁡δ)^2]^(1/2) (Equation A19)
+# Equation A19)
 #β2 = acos(  ( ℎ**2 + (g * cos(δ) - sin(β1) * sin(δ))**2 )**0.5 )
 
-# Φ2 = {tan^−1[(a×sin⁡β2)(b×cos⁡β2)]×(180/π)(geodetic latitude of target point, DDD) (Equation A20)
+# (Equation A20) (geodetic latitude of target point, DDD)
 Φ2 = atan( (a*sin(β2))/(b*cos(β2)) ) * (180/π)
 
-# Δ = tan⁡^−1[(sin⁡Δ·sin⁡α12)/(cos⁡β1·cos⁡Δ−sin⁡β1·sin⁡Δ·cos⁡α12)] (Equation A21)
+# (Equation A21)
 Δ = atan( (sin(δ)*sin(α12))/(cos(β1)*cos(δ)-sin(β1)*sin(δ)*cos(α12)) )
 
-# Δ2=(λ1+Δ+L)(180/π) (longitude of target point,DDD) (Equation A22)
+# (Equation A22) (longitude of target point,DDD)
 λ2 = (λ1+Δ+L) * (180/π)
 
-print(Φ2)
-print(λ2)
-
+print("Geodetic Latitde of Target Point: %.6f deg" % Φ2)
+print("Geodetic Longitude of Target Point: %.6f deg" % λ2)
 
 
 # (ii) To create latitude and longitude pairs on an ellipsoidal Earth model, an applicant shall use the following equations to
@@ -170,10 +168,10 @@ f = 1 - b/a
 L = λ2 - λ1
 
 # (Equation A25)
-β1 = atan( (b*sin(Φ1)) / (α*cos(Φ1)) )
+β1 = atan( (b*sin(Φ1)) / (α12*cos(Φ1)) )
 
 # (Equation A26)
-β2 = atan( (b*sin(Φ2)) / (α*cos(Φ2)) )
+β2 = atan( (b*sin(Φ2)) / (α12*cos(Φ2)) )
 
 # (Equation A27)
 A = sin(β1) * sin(β2)
@@ -192,9 +190,12 @@ n = (a-b)/(a+b)
 
 # (Equation A32)
 sinδ = ( (sin(L)*cos(β2))**2 + ( sin(β2_β1) + 2 * cos(β2) * sin(β1) * sin(L/2)**2 )**2  )**0.5
+print(sinδ)
 
 # (Equation A33)
 δ = atan(sinδ/cosδ) # evaluated in positive radians <= π
+print(δ)
+print(sin(δ))
 
 # (Equation A34)
 c = B * sin(L) / sinδ
@@ -216,7 +217,7 @@ S = b * (one + two + three + four + five)
 # (Equation A38)
 α12 = atan( (cos(β2)*sin(Λ)) / (sin(β2_β1)+2*cos(β2)*sin(β1*sin(Λ/2)**2)) ) * (180/π)
 
-# (Equation A38)
+# (Equation A39)
 α21 = atan( (-cos(β1)*sin(Λ)) / (2*cos(β1)*sin(β2)*sin(Λ/2)**2-sin(β2_β1)) ) * (180/π)
 
 
