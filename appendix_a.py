@@ -7,46 +7,50 @@ from math import pi, sin, cos, asin, acos, tan, atan
 
 # (a) Introduction
 
-# (1) This appendix provides a method for constructing a flight corridor from a launch point for a guided suborbital launch vehicle or any one of the four classes of
-# guided orbital launch vehicles from table 1, § 420.19, without the use of local meteorological data or a launch vehicle trajectory.
+# (1) This appendix provides a method for constructing a flight corridor from a launch point for a guided suborbital launch vehicle
+# or any one of the four classes of guided orbital launch vehicles from table 1, § 420.19, without the use of local meteorological data
+# or a launch vehicle trajectory.
 
-# (2) A flight corridor includes an overflight exclusion zone in a launch area and, for a guided suborbital launch vehicle, an impact dispersion area in a downrange area.
-# A flight corridor for a guided suborbital launch vehicle ends with the impact dispersion area, and, for the four classes of guided orbital launch vehicles,
-# 5000 nautical miles (nm) from the launch point.
+# (2) A flight corridor includes an overflight exclusion zone in a launch area and, for a guided suborbital launch vehicle, an impact
+# dispersion area in a downrange area. A flight corridor for a guided suborbital launch vehicle ends with the impact dispersion area,
+# and, for the four classes of guided orbital launch vehicles, 5000 nautical miles (nm) from the launch point.
 
 # (b) Data requirements
 
-# (1) Maps. An applicant shall use any map for the launch site region with a scale not less than 1:250,000 inches per inch in the launch area and 1:20,000,000 inches
-# per inch in the downrange area. As described in paragraph (b)(2), an applicant shall use a mechanical method, a semi-automated method, or a fully-automated method
-# to plot a flight corridor on maps. A source for paper maps acceptable to the FAA is the U.S. Dept. of Commerce, National Oceanic and Atmospheric Administration,
-# National Ocean Service.
+# (1) Maps. An applicant shall use any map for the launch site region with a scale not less than 1:250,000 inches per inch in the launch
+# area and 1:20,000,000 inches per inch in the downrange area. As described in paragraph (b)(2), an applicant shall use a mechanical method,
+# a semi-automated method, or a fully-automated method to plot a flight corridor on maps. A source for paper maps acceptable to the FAA is
+# the U.S. Dept. of Commerce, National Oceanic and Atmospheric Administration, National Ocean Service.
 
-# (i) Projections for mechanical plotting method. An applicant shall use a conic projection. The FAA will accept a “Lambert-Conformal” conic projection.
-# A polar aspect of a plane-azimuthal projection may also be used for far northern launch sites.
+# (i) Projections for mechanical plotting method. An applicant shall use a conic projection. The FAA will accept a “Lambert-Conformal” conic
+# projection. A polar aspect of a plane-azimuthal projection may also be used for far northern launch sites.
 
-# (ii) Projections for semi-automated plotting method. An applicant shall use cylindrical, conic, or plane projections for semi-automated plotting.
-# The FAA will accept “Mercator” and “Oblique Mercator” cylindrical projections. The FAA will accept “Lambert-Conformal” and “Albers Equal-Area” conic projections.
-# The FAA will accept “Lambert Azimuthal Equal-Area” and “Azimuthal Equidistant” plane projections.
+# (ii) Projections for semi-automated plotting method. An applicant shall use cylindrical, conic, or plane projections for semi-automated
+# plotting. The FAA will accept “Mercator” and “Oblique Mercator” cylindrical projections. The FAA will accept “Lambert-Conformal” and
+# “Albers Equal-Area” conic projections.The FAA will accept “Lambert Azimuthal Equal-Area” and “Azimuthal Equidistant” plane projections.
 
-# (iii) Projections for fully-automated plotting method. The FAA will accept map projections used by geographical information system software scaleable pursuant
-# to the requirements of paragraph (b)(1).
+# (iii) Projections for fully-automated plotting method. The FAA will accept map projections used by geographical information system software
+# scaleable pursuant to the requirements of paragraph (b)(1).
 
 # (2) Plotting Methods.
 
-# (i) Mechanical method. An applicant may use mechanical drafting equipment such as pencil, straight edge, ruler, protractor, and compass to plot the location
-# of a flight corridor on a map. The FAA will accept straight lines for distances less than or equal to 7.5 times the map scale on map scales greater than or
+# (i) Mechanical method. An applicant may use mechanical drafting equipment such as pencil, straight edge, ruler, protractor, and compass to
+# plot the location of a flight corridor on a map. The FAA will accept straight lines for distances less than or equal to 7.5 times the map
+# scale on map scales greater than or equal to 1:1,000,000 inches per inch (in/in); or straight lines representing 100 nm or less on map scales
+# less than 1:1,000,000 in/in.
+
+# (ii) Semi-automated method. An applicant may employ the range and bearing techniques in paragraph (b)(3) to create latitude and longitude
+# points on a map. The FAA will accept straight lines for distances less than or equal to 7.5 times the map scale on map scales greater than or
 # equal to 1:1,000,000 inches per inch (in/in); or straight lines representing 100 nm or less on map scales less than 1:1,000,000 in/in.
 
-# (ii) Semi-automated method. An applicant may employ the range and bearing techniques in paragraph (b)(3) to create latitude and longitude points on a map.
-# The FAA will accept straight lines for distances less than or equal to 7.5 times the map scale on map scales greater than or equal to 1:1,000,000 inches
-# per inch (in/in); or straight lines representing 100 nm or less on map scales less than 1:1,000,000 in/in.
-
-# (iii) Fully-automated method. An applicant may use geographical information system software with global mapping data scaleable in accordance with paragraph (b)(1).
+# (iii) Fully-automated method. An applicant may use geographical information system software with global mapping data scaleable in accordance
+# with paragraph (b)(1).
 
 # (3) Range and bearing computations on an ellipsoidal Earth model.
 
-# (i) To create latitude and longitude pairs on an ellipsoidal Earth model, an applicant shall use the following equations to calculate geodetic latitude (+N)
-# and longitude (+E) given the launch point geodetic latitude (+N), longitude (+E), range (nm), and bearing (degrees, positive clockwise from North).
+# (i) To create latitude and longitude pairs on an ellipsoidal Earth model, an applicant shall use the following equations to calculate geodetic
+# latitude (+N) and longitude (+E) given the launch point geodetic latitude (+N), longitude (+E), range (nm), and bearing (degrees, positive
+# clockwise from North).
 
 # (A) Input. An applicant shall use the following input in making range and bearing computations. Angle units must be in radians.
 
@@ -62,8 +66,8 @@ S = 5000
 # α12 = Azimuth bearing from launch point (deg) = α12(DDD)·π/180 (radians per degree)
 α12 = 115 * π/180
 
-#(B) Computations. An applicant shall use the following equations to determine the latitude (φ2) and longitude (λ2) of a target point situated “S” nm
-# from the launch point on an azimuth bearing (α12) degrees.
+#(B) Computations. An applicant shall use the following equations to determine the latitude (φ2) and longitude (λ2) of a target point situated “S”
+# nm from the launch point on an azimuth bearing (α12) degrees.
 
 
 # f = 1 − b/a (Equation A1)
@@ -266,12 +270,12 @@ Doez = 240500
 
 # (B) An applicant shall define the downrange boundary with a half-circle arc of radius Dmax and a chord of length twice Dmax connecting
 # the half-circle arc endpoints. The downrange boundary placement on a map has the chord midpoint intersecting the nominal flight azimuth
-# line at a distance DOEZ inches downrange with the chord oriented along an azimuth ±90°from the launch azimuth and the half-circle arc located
-# downrange from the intersection of the chord and the flight azimuth line.
+# line at a distance DOEZ inches downrange with the chord oriented along an azimuth ±90°from the launch azimuth and the half-circle arc
+# located downrange from the intersection of the chord and the flight azimuth line.
 #
 # (C) Crossrange boundaries of an overflight exclusion zone are defined by two lines segments. Each is parallel to the flight azimuth
-# with one to the left side and one to the right side of the flight azimuth line. Each line connects an uprange half-circle arc endpoint to
-# a downrange half-circle arc endpoint as shown in figure A–1.
+# with one to the left side and one to the right side of the flight azimuth line. Each line connects an uprange half-circle arc endpoint
+# to a downrange half-circle arc endpoint as shown in figure A–1.
 #
 # (iii) An applicant shall identify the overflight exclusion zone on a map that meets the requirements of paragraph (b).
 #
@@ -296,7 +300,8 @@ Doez = 240500
 #
 # (D) Except for a guided suborbital launch vehicle, an applicant shall draw a downrange boundary, which is defined by line HI and is
 # drawn perpendicular to and centered on the flight azimuth line, and positioned 5,000 nm downrange from the launch point.
-# The applicant shall use the length of line HI provided in table A–3 corresponding to the orbital launch vehicle class selected in paragraph (c)(1)(i).
+# The applicant shall use the length of line HI provided in table A–3 corresponding to the orbital launch vehicle class selected in
+# paragraph (c)(1)(i).
 #
 # (E) An applicant shall draw crossrange boundaries, which are defined by three lines on the left side and three lines on the right side of
 # the flight azimuth. An applicant shall construct the left flight corridor boundary according to the following, and as depicted in figure A–3 :
@@ -321,10 +326,11 @@ Doez = 240500
 # (i) An applicant shall select an apogee altitude (Hap) for the launch vehicle final stage. The apogee altitude should equal the highest
 # altitude intended to be reached by a guided suborbital launch vehicle launched from the launch point.
 #
-# (ii) An applicant shall define the impact dispersion area by using an impact range factor [IP(Hap)] and a dispersion factor [DISP(Hap)] as shown below:
+# (ii) An applicant shall define the impact dispersion area by using an impact range factor [IP(Hap)] and a dispersion factor [DISP(Hap)] as
+# shown below:
 #
-# (A) An applicant shall calculate the impact range (D) for the final launch vehicle stage. An applicant shall set D equal to the maximum apogee altitude
-# (Hap) multiplied by the impact range factor as shown below:
+# (A) An applicant shall calculate the impact range (D) for the final launch vehicle stage. An applicant shall set D equal to the maximum
+# apogee altitude (Hap) multiplied by the impact range factor as shown below:
 
 # (Equation A40)
 # D = Hap * IP(Hap)
