@@ -208,18 +208,15 @@ three = -(A**2 * f**2/2) * sin(δ) * cos(δ)
 four = (f**2 * m**2/16) * (δ + sin(δ) * cos(δ) - 2 * sin(δ) * cos(δ)**3 - 8 * δ**2 / (tan(δ)) )
 five = (A**2 * m * f**2/2) * (sin(δ) * cos(δ) + δ + δ**2 / (sin(δ)) )
 S = b * (one + two + three + four + five)
-print(S)
 
 # (Equation A37)
 Λ = L + c * (δ * (f+f**2) - (A*f**2/2) * (sin(δ)+2*δ**2/(sin(δ))) + (m*f**2/4) * (sin(δ)*cos(δ)-5*δ+4*δ**2/(tan(δ)))  )
 
 # (Equation A38)
 α12 = atan( (cos(β2)*sin(Λ)) / (sin(β2_β1)+2*cos(β2)*sin(β1*sin(Λ/2)**2)) ) * (180/π)
-print(α12)
 
 # (Equation A39)
 α21 = atan( (-cos(β1)*sin(Λ)) / (2*cos(β1)*sin(β2)*sin(Λ/2)**2-sin(β2_β1)) ) * (180/π)
-print(α21)
 
 # (c) Creation of a Flight Corridor
 #
