@@ -64,7 +64,7 @@ from math import pi, sin, cos, asin, acos, tan, atan, degrees, radians
 S = 5000
 
 # α12 = Azimuth bearing from launch point (deg) = α12(DDD)·π/180 (radians per degree)
-α12 = 115 * π/180
+α12 = 100 * π/180
 
 #(B) Computations. An applicant shall use the following equations to determine the latitude (φ2) and longitude (λ2) of a target point situated “S”
 # nm from the launch point on an azimuth bearing (α12) degrees.
@@ -80,34 +80,34 @@ b = 3432.37165994
 f = 1 - b/a
 
 # (Equation A2)
-ε = ((a**2-b**2)/b**2)**0.5
+ε2 = (a**2-b**2)/b**2
 
 # (Equation A3)
 Ø = S/b
 
 # (Equation A4)
-β1 = atan( (b*sin(Φ1)) * (a*cos(Φ1)) )
+β1 = atan( (b*sin(Φ1)) / (a*cos(Φ1)) )
 
 # (Equation A5)
 g = cos(β1)*cos(α12)
 
 # (Equation A6)
-ℎ = cos(β1)*sin(α12)
+h = cos(β1)*sin(α12)
 
 # (Equation A7)
-m = ( (1 + (ε**2/2) * sin(β1)**2) * (1 - ℎ**2) ) / 2
+m = ( (1 + (ε2/2) * sin(β1)**2) * (1 - h**2) ) / 2
 
 # (Equation A8)
-n = ( (1 + (ε**2/2) * sin(β1)**2) * (sin(β1)**2 * cos(Ø) + (g * sin(β1) * sin(Ø)) ) ) / 2
+n = ( (1 + (ε2/2) * sin(β1)**2) * (sin(β1)**2 * cos(Ø) + g * sin(β1) * sin(Ø)) ) / 2
 
 # (Equation A9)
-L = ℎ * (-f * Ø + 3 * f**2 * n * sin(Ø) + ((3 * f**2 * m * (Ø-sin(Ø)*cos(Ø))) / 2)  )
+L = h * (-f * Ø + 3 * f**2 * n * sin(Ø) + ((3 * f**2 * m * (Ø-sin(Ø)*cos(Ø))) / 2)  )
 
 # (Equation A10)
-M = m * ε**2
+M = m * ε2
 
 # (Equation A11)
-N = n * ε**2
+N = n * ε2
 
 # (Equation A12)
 A1 = N * sin(Ø)
@@ -116,10 +116,10 @@ A1 = N * sin(Ø)
 A2 = (M/2) * (sin(Ø) * cos(Ø) - Ø)
 
 # (Equation A14)
-A3 = (5/2) * (N**2 * sin(Ø) * cos(0))
+A3 = (5/2) * (N**2 * sin(Ø) * cos(Ø))
 
 # (Equation A15)
-A4 = (M**2/16) * (11 * Ø - 13 * sin(Ø) * cos(Ø) - 8 * cos(Ø)**2 + 10 * sin(Ø) * cos(Ø)**3)
+A4 = (M**2/16) * (11 * Ø - 13 * sin(Ø) * cos(Ø) - 8 * Ø * cos(Ø)**2 + 10 * sin(Ø) * cos(Ø)**3)
 
 # (Equation A16)
 A5 = (M*N/2) * (3 * sin(Ø) + 2 * Ø * cos(Ø) - 5 * sin(Ø) * cos(Ø)**2)
@@ -128,13 +128,13 @@ A5 = (M*N/2) * (3 * sin(Ø) + 2 * Ø * cos(Ø) - 5 * sin(Ø) * cos(Ø)**2)
 δ = Ø - A1 + A2 + A3 + A4 + A5
 
 # (Equation A18)
-β2 = asin( sin(β1) * cos(δ) + g * sin(δ) )
+sinβ2 = sin(β1) * cos(δ) + g * sin(δ)
 
 # Equation A19)
-#β2 = acos(  ( ℎ**2 + (g * cos(δ) - sin(β1) * sin(δ))**2 )**0.5 )
+cosβ2 = (h**2 + (g * cos(δ) - sin(β1) * sin(δ))**2 )**0.5
 
 # (Equation A20) (geodetic latitude of target point, DDD)
-Φ2 = atan( (a*sin(β2))/(b*cos(β2)) ) * (180/π)
+Φ2 = atan( (a*sinβ2)/(b*cosβ2) ) * (180/π)
 
 # (Equation A21)
 Δ = atan( (sin(δ)*sin(α12))/(cos(β1)*cos(δ)-sin(β1)*sin(δ)*cos(α12)) )
@@ -162,6 +162,7 @@ print("Geodetic Longitude of Target Point: %.6f deg" % λ2)
 a = 3443.91846652
 b = 3432.37165994
 
+# (Equation A23)
 f = 1 - b/a
 
 # (Equation A24)
@@ -190,12 +191,9 @@ n = (a-b)/(a+b)
 
 # (Equation A32)
 sinδ = ( (sin(L)*cos(β2))**2 + ( sin(β2_β1) + 2 * cos(β2) * sin(β1) * sin(L/2)**2 )**2  )**0.5
-print(sinδ)
 
 # (Equation A33)
 δ = atan(sinδ/cosδ) # evaluated in positive radians <= π
-print(δ)
-print(sin(δ))
 
 # (Equation A34)
 c = B * sin(L) / sinδ
@@ -210,16 +208,18 @@ three = -(A**2 * f**2/2) * sin(δ) * cos(δ)
 four = (f**2 * m**2/16) * (δ + sin(δ) * cos(δ) - 2 * sin(δ) * cos(δ)**3 - 8 * δ**2 / (tan(δ)) )
 five = (A**2 * m * f**2/2) * (sin(δ) * cos(δ) + δ + δ**2 / (sin(δ)) )
 S = b * (one + two + three + four + five)
+print(S)
 
 # (Equation A37)
 Λ = L + c * (δ * (f+f**2) - (A*f**2/2) * (sin(δ)+2*δ**2/(sin(δ))) + (m*f**2/4) * (sin(δ)*cos(δ)-5*δ+4*δ**2/(tan(δ)))  )
 
 # (Equation A38)
 α12 = atan( (cos(β2)*sin(Λ)) / (sin(β2_β1)+2*cos(β2)*sin(β1*sin(Λ/2)**2)) ) * (180/π)
+print(α12)
 
 # (Equation A39)
 α21 = atan( (-cos(β1)*sin(Λ)) / (2*cos(β1)*sin(β2)*sin(Λ/2)**2-sin(β2_β1)) ) * (180/π)
-
+print(α21)
 
 # (c) Creation of a Flight Corridor
 #
