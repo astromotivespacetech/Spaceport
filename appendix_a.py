@@ -1,5 +1,113 @@
 # https://www.govinfo.gov/content/pkg/CFR-2012-title14-vol4/pdf/CFR-2012-title14-vol4-part420-appA.pdf
 
+
+# ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
+# Table 1 of § 420.19  Orbital Expendable Launch Vehicle Classes by Payload Weight (lbs)
+# ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
+#
+# 100 nm orbit           |	                             Weight class
+# ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
+#                              Small       |      Medium      |     Medium large     |	     Large
+#
+# 28 degrees inclination *	   ≤4400       |  >4400 to ≤11100 |	  >11100 to ≤18500	 |      >18500
+#
+# 90 degrees inclination	   ≤3300	   |  >3300 to ≤8400  |	  >8400 to ≤15000	 |      >15000
+
+
+
+
+# –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
+# TABLE A–1—DEBRIS DISPERSION RADIUS (Dmax) (IN)                             #
+# –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
+#                                                                            #
+#                    ORBITAL LAUNCH VEHICLES               |  SUBORBITAL LV  #
+#                                                                            #
+#   |  SMALL  |   MEDIUM   |   MEDIUM LARGE   |   LARGE    |  GUIDED         #
+#                                                                            #
+#      87,600     111,600      127,200            156,000     96,000         #
+#      (1.2 nm)   (1.53 nm)    (1.74 nm)          (2.14 nm)   (1.32 nm)      #
+
+DEBRIS_DISPERSION_RADUIS = {
+    'SMALL': 1.2,
+    'MEDIUM': 1.53,
+    'MEDIUM-LARGE': 1.74,
+    'LARGE': 2.14,
+    'GUIDED': 1.32
+}
+
+
+# –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
+# TABLE A–2—OVERFLIGHT EXCLUSION ZONE DOWNRANGE DISTANCE (Doez) (IN)         #
+# –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
+#                                                                            #
+#                    ORBITAL LAUNCH VEHICLES               |  SUBORBITAL LV  #
+#                                                                            #
+#   |  SMALL  |   MEDIUM   |   MEDIUM-LARGE   |   LARGE    |  GUIDED         #
+#                                                                            #
+#      240,500    253,000      310,300            937,700     232,100        #
+#      (3.3 nm)   (3.47 nm)    (4.26 nm)         (12.86 nm)   (3.18 nm)      #
+
+
+OVERFLIGHT_EXCLUSION_ZONE_DOWNRANGE_DISTANCE = {
+    'SMALL': 3.3,
+    'MEDIUM': 3.47,
+    'MEDIUM-LARGE': 4.26,
+    'LARGE': 12.86,
+    'GUIDED': 3.18
+}
+
+
+# –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
+# TABLE A-3: FLIGHT CORRIDOR LINE SEGMENTS LENGTH                            #
+# –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
+#                                                                            #
+# Dmax(in)                  | LINE SEGMENT LENGTHS (x 10^6 inches)           #
+#                           |                                                #
+# ORBITAL LAUNCH VEHICLES   |      CF      |      DE      |      HI      |   #
+# –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
+# SMALL         | 87,600    |    2.87620   |    8.59452   |    128.566   |   #
+#                               (39.45 nm)    (117.87 nm)   (1,763.27 nm)
+# MEDIUM        | 111,600   |    2.97220   |    8.64252   |    128.566   |   #
+#                               (40.76 nm)    (118.53 nm)   (1,763.27 nm)
+# MEDIUM-LARGE  | 127,200   |    3.03460   |    8.67372   |    128.566   |   #
+#                               (41.62 nm)    (118.96 nm)   (1,763.27 nm)
+# LARGE         | 156,000   |    3.14979   |    8.73131   |    128.566   |   #
+#                               (43.20 nm)    (119.75 nm)   (1,763.27 nm)
+# –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
+# SUBORBITAL LV | 96,000    |    2.90980   |    8.61132   |    N/A       |   #
+#                               (39.91 nm)    (118.10 nm)                    #
+#                                                                            #
+
+
+FLIGHT_CORRIDOR_LINE_SEGMENTS_LENGTH = {
+    'SMALL': {
+        'CF': 39.45,
+        'DE': 117.87,
+        'HI': 1763.27
+    },
+    'MEDIUM': {
+        'CF': 40.76,
+        'DE': 118.53,
+        'HI': 1763.27
+    },
+    'MEDIUM-LARGE': {
+        'CF': 41.62,
+        'DE': 118.96,
+        'HI': 1763.27
+    },
+    'LARGE': {
+        'CF': 43.2,
+        'DE': 119.75,
+        'HI': 1763.27
+    },
+    'GUIDED': {
+        'CF': 39.91,
+        'DE': 118.1,
+        'HI': None
+    }
+}
+
+
 from math import pi, sin, cos, asin, acos, tan, atan, degrees, radians
 π = pi
 
@@ -55,16 +163,13 @@ from math import pi, sin, cos, asin, acos, tan, atan, degrees, radians
 # (A) Input. An applicant shall use the following input in making range and bearing computations. Angle units must be in radians.
 
 # Φ1 = Geodetic latitude of launch point (radians) = Φ1 (DDD)·π/180 (radians per degree)
-Φ1 = 43.09257 * π/180
 
 # λ1 = Longitude of launch point (DDD) = λ(DDD)·π/180 (radians per degree)
-λ1 = -120.0004 * π/180
 
 # S = Range from launch point (nm) = S(DDD)·π/180 (radians per degree)
-S = 5000
 
 # α12 = Azimuth bearing from launch point (deg) = α12(DDD)·π/180 (radians per degree)
-α12 = 100 * π/180
+
 
 #(B) Computations. An applicant shall use the following equations to determine the latitude (φ2) and longitude (λ2) of a target point situated “S”
 # nm from the launch point on an azimuth bearing (α12) degrees.
@@ -76,74 +181,87 @@ S = 5000
 a = 3443.91846652
 b = 3432.37165994
 
-# (Equation A1)
-f = 1 - b/a
 
-# (Equation A2)
-ε2 = (a**2-b**2)/b**2
+def lat_lon_of_target(Φ1, λ1, α12, S):
 
-# (Equation A3)
-Ø = S/b
+    # (Equation A1)
+    f = 1 - b/a
 
-# (Equation A4)
-β1 = atan( (b*sin(Φ1)) / (a*cos(Φ1)) )
+    # (Equation A2)
+    ε2 = (a**2-b**2)/b**2
 
-# (Equation A5)
-g = cos(β1)*cos(α12)
+    # (Equation A3)
+    Ø = S/b
 
-# (Equation A6)
-h = cos(β1)*sin(α12)
+    # (Equation A4)
+    β1 = atan( (b*sin(Φ1)) / (a*cos(Φ1)) )
 
-# (Equation A7)
-m = ( (1 + (ε2/2) * sin(β1)**2) * (1 - h**2) ) / 2
+    # (Equation A5)
+    g = cos(β1)*cos(α12)
 
-# (Equation A8)
-n = ( (1 + (ε2/2) * sin(β1)**2) * (sin(β1)**2 * cos(Ø) + g * sin(β1) * sin(Ø)) ) / 2
+    # (Equation A6)
+    h = cos(β1)*sin(α12)
 
-# (Equation A9)
-L = h * (-f * Ø + 3 * f**2 * n * sin(Ø) + ((3 * f**2 * m * (Ø-sin(Ø)*cos(Ø))) / 2)  )
+    # (Equation A7)
+    m = ( (1 + (ε2/2) * sin(β1)**2) * (1 - h**2) ) / 2
 
-# (Equation A10)
-M = m * ε2
+    # (Equation A8)
+    n = ( (1 + (ε2/2) * sin(β1)**2) * (sin(β1)**2 * cos(Ø) + g * sin(β1) * sin(Ø)) ) / 2
 
-# (Equation A11)
-N = n * ε2
+    # (Equation A9)
+    L = h * (-f * Ø + 3 * f**2 * n * sin(Ø) + ((3 * f**2 * m * (Ø-sin(Ø)*cos(Ø))) / 2)  )
 
-# (Equation A12)
-A1 = N * sin(Ø)
+    # (Equation A10)
+    M = m * ε2
 
-# (Equation A13)
-A2 = (M/2) * (sin(Ø) * cos(Ø) - Ø)
+    # (Equation A11)
+    N = n * ε2
 
-# (Equation A14)
-A3 = (5/2) * (N**2 * sin(Ø) * cos(Ø))
+    # (Equation A12)
+    A1 = N * sin(Ø)
 
-# (Equation A15)
-A4 = (M**2/16) * (11 * Ø - 13 * sin(Ø) * cos(Ø) - 8 * Ø * cos(Ø)**2 + 10 * sin(Ø) * cos(Ø)**3)
+    # (Equation A13)
+    A2 = (M/2) * (sin(Ø) * cos(Ø) - Ø)
 
-# (Equation A16)
-A5 = (M*N/2) * (3 * sin(Ø) + 2 * Ø * cos(Ø) - 5 * sin(Ø) * cos(Ø)**2)
+    # (Equation A14)
+    A3 = (5/2) * (N**2 * sin(Ø) * cos(Ø))
 
-# (Equation A17)
-δ = Ø - A1 + A2 + A3 + A4 + A5
+    # (Equation A15)
+    A4 = (M**2/16) * (11 * Ø - 13 * sin(Ø) * cos(Ø) - 8 * Ø * cos(Ø)**2 + 10 * sin(Ø) * cos(Ø)**3)
 
-# (Equation A18)
-sinβ2 = sin(β1) * cos(δ) + g * sin(δ)
+    # (Equation A16)
+    A5 = (M*N/2) * (3 * sin(Ø) + 2 * Ø * cos(Ø) - 5 * sin(Ø) * cos(Ø)**2)
 
-# Equation A19)
-cosβ2 = (h**2 + (g * cos(δ) - sin(β1) * sin(δ))**2 )**0.5
+    # (Equation A17)
+    δ = Ø - A1 + A2 + A3 + A4 + A5
 
-# (Equation A20) (geodetic latitude of target point, DDD)
-Φ2 = atan( (a*sinβ2)/(b*cosβ2) ) * (180/π)
+    # (Equation A18)
+    sinβ2 = sin(β1) * cos(δ) + g * sin(δ)
 
-# (Equation A21)
-Δ = atan( (sin(δ)*sin(α12))/(cos(β1)*cos(δ)-sin(β1)*sin(δ)*cos(α12)) )
+    # Equation A19)
+    cosβ2 = (h**2 + (g * cos(δ) - sin(β1) * sin(δ))**2 )**0.5
 
-# (Equation A22) (longitude of target point,DDD)
-λ2 = (λ1+Δ+L) * (180/π)
+    # (Equation A20) (geodetic latitude of target point, DDD)
+    Φ2 = atan( (a*sinβ2)/(b*cosβ2) ) * (180/π)
 
-print("Geodetic Latitde of Target Point: %.6f deg" % Φ2)
-print("Geodetic Longitude of Target Point: %.6f deg" % λ2)
+    # (Equation A21)
+    Δ = atan( (sin(δ)*sin(α12))/(cos(β1)*cos(δ)-sin(β1)*sin(δ)*cos(α12)) )
+
+    # (Equation A22) (longitude of target point,DDD)
+    λ2 = (λ1+Δ+L) * (180/π)
+
+    print("Geodetic Latitde of Target Point: %s deg" % str(Φ2))
+    print("Geodetic Longitude of Target Point: %s deg" % str(λ2))
+
+    return Φ2, λ2
+
+
+Φ1 = 43.07961 * π/180
+λ1 = -119.94511 * π/180
+α12 = 105 * π/180
+S = 5000
+
+Φ2, λ2 = lat_lon_of_target(Φ1, λ1, α12, S)
 
 
 # (ii) To create latitude and longitude pairs on an ellipsoidal Earth model, an applicant shall use the following equations to
@@ -218,6 +336,15 @@ S = b * (one + two + three + four + five)
 # (Equation A39)
 α21 = atan( (-cos(β1)*sin(Λ)) / (2*cos(β1)*sin(β2)*sin(Λ/2)**2-sin(β2_β1)) ) * (180/π)
 
+
+
+
+
+
+
+
+
+
 # (c) Creation of a Flight Corridor
 #
 # (1) To define a flight corridor, an applicant shall:
@@ -231,24 +358,25 @@ LV = 'SMALL'
 # (ii) Select a debris dispersion radius (Dmax) from table A–1 corresponding to the guided suborbital launch vehicle or orbital launch
 # vehicle class selected in paragraph (c)(1)(i);
 
-Dmax = 87600
+Dmax = DEBRIS_DISPERSION_RADUIS[LV]
 
 #
 # (iii) Select a launch point geodetic latitude and longitude; and
 #
 
+
 # Φ1 = Geodetic latitude of launch point (radians) = Φ1 (DDD)·π/180 (radians per degree)
-Φ1 = 43.09257 * π/180
+ΦLP = Φ1
 
 # λ1 = Longitude of launch point (DDD) = λ(DDD)·π/180 (radians per degree)
-λ1 = -120.0004 * π/180
+λLP = λ1
 
+LP = (ΦLP, λLP)
 
 # (iv) Select a flight azimuth.
-#
 
 # α12 = Azimuth bearing from launch point (deg) = α12(DDD)·π/180 (radians per degree)
-α12 = 115 * π/180
+αft = 110 * π/180
 
 
 # (2) An applicant shall define and map an overflight exclusion zone using the following method:
@@ -257,13 +385,18 @@ Dmax = 87600
 # exclusion zone for the guided suborbital launch vehicle or orbital launch vehicle class selected in paragraph (c)(1)(i).
 #
 
-Doez = 240500
+Doez = OVERFLIGHT_EXCLUSION_ZONE_DOWNRANGE_DISTANCE[LV]
+
+ΦDoez, λDoez = lat_lon_of_target(LP[0], LP[1], αft, Doez)
+
+print(ΦDoez, λDoez)
 
 # (ii) An overflight exclusion zone is described by the intersection of the following boundaries, which are depicted in figure A–1:
 #
 # (A) An applicant shall define an uprange boundary with a half-circle arc of radius Dmax and a chord of length twice Dmax connecting
 # the half-circle arc endpoints. The uprange boundary placement on a map has the chord midpoint positioned on the launch point
 # with the chord oriented along an azimuth ±90°from the launch azimuth and the halfcircle arc located uprange from the launch point.
+
 
 
 # (B) An applicant shall define the downrange boundary with a half-circle arc of radius Dmax and a chord of length twice Dmax connecting
@@ -359,66 +492,6 @@ Doez = 240500
 # (3) If a populated area is located within the flight corridor, an applicant may modify its proposal and create another flight corridor
 # pursuant to appendix A, use appendix B to narrow the flight corridor, or complete a risk analysis in accordance with appendix C.
 
-# ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
-# Table 1 of § 420.19  Orbital Expendable Launch Vehicle Classes by Payload Weight (lbs)
-# ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
-#
-# 100 nm orbit           |	                             Weight class
-# ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
-#                              Small       |      Medium      |     Medium large     |	     Large
-#
-# 28 degrees inclination *	   ≤4400       |  >4400 to ≤11100 |	  >11100 to ≤18500	 |      >18500
-#
-# 90 degrees inclination	   ≤3300	   |  >3300 to ≤8400  |	  >8400 to ≤15000	 |      >15000
-
-
-
-
-# –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
-# TABLE A–1—DEBRIS DISPERSION RADIUS (Dmax) (IN)                             #
-# –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
-#                                                                            #
-#                    ORBITAL LAUNCH VEHICLES               |  SUBORBITAL LV  #
-#                                                                            #
-#   |  SMALL  |   MEDIUM   |   MEDIUM LARGE   |   LARGE    |  GUIDED         #
-#                                                                            #
-#      87,600     111,600      127,200            156,000     96,000         #
-#      (1.2 nm)   (1.53 nm)    (1.74 nm)          (2.14 nm)   (1.32 nm)      #
-
-
-
-# –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
-# TABLE A–2—OVERFLIGHT EXCLUSION ZONE DOWNRANGE DISTANCE (Doez) (IN)         #
-# –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
-#                                                                            #
-#                    ORBITAL LAUNCH VEHICLES               |  SUBORBITAL LV  #
-#                                                                            #
-#   |  SMALL  |   MEDIUM   |   MEDIUM-LARGE   |   LARGE    |  GUIDED         #
-#                                                                            #
-#      240,500    253,000      310,300            937,700     232,100        #
-#      (3.3 nm)   (3.47 nm)    (4.26 nm)         (12.86 nm)   (3.18 nm)      #
-
-
-# –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
-# TABLE A-3: FLIGHT CORRIDOR LINE SEGMENTS LENGTH                            #
-# –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
-#                                                                            #
-# Dmax(in)                  | LINE SEGMENT LENGTHS (x 10^6 inches)           #
-#                           |                                                #
-# ORBITAL LAUNCH VEHICLES   |      CF      |      DE      |      HI      |   #
-# –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
-# SMALL         | 87,600    |    2.87620   |    8.59452   |    128.566   |   #
-#                               (39.45 nm)    (117.87 nm)   (1,763.27 nm)
-# MEDIUM        | 111,600   |    2.97220   |    8.64252   |    128.566   |   #
-#                               (40.76 nm)    (118.53 nm)   (1,763.27 nm)
-# MEDIUM-LARGE  | 127,200   |    3.03460   |    8.67372   |    128.566   |   #
-#                               (41.62 nm)    (118.96 nm)   (1,763.27 nm)
-# LARGE         | 156,000   |    3.14979   |    8.73131   |    128.566   |   #
-#                               (43.20 nm)    (119.75 nm)   (1,763.27 nm)
-# –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
-# SUBORBITAL LV | 96,000    |    2.90980   |    8.61132   |    N/A       |   #
-#                               (39.91 nm)    (118.10 nm)                    #
-#                                                                            #
 
 
 
