@@ -182,7 +182,9 @@ a = 3443.91846652
 b = 3432.37165994
 
 
-def lat_lon_of_target(Φ1, λ1, α12, S):
+def lat_lon_of_target(Φ, λ, α, s):
+
+    # print(Φ, λ, α, s)
 
     # (Equation A1)
     f = 1 - b/a
@@ -191,16 +193,16 @@ def lat_lon_of_target(Φ1, λ1, α12, S):
     ε2 = (a**2-b**2)/b**2
 
     # (Equation A3)
-    Ø = S/b
+    Ø = s/b
 
     # (Equation A4)
-    β1 = atan( (b*sin(Φ1)) / (a*cos(Φ1)) )
+    β1 = atan( (b*sin(Φ)) / (a*cos(Φ)) )
 
     # (Equation A5)
-    g = cos(β1)*cos(α12)
+    g = cos(β1)*cos(α)
 
     # (Equation A6)
-    h = cos(β1)*sin(α12)
+    h = cos(β1)*sin(α)
 
     # (Equation A7)
     m = ( (1 + (ε2/2) * sin(β1)**2) * (1 - h**2) ) / 2
@@ -242,13 +244,13 @@ def lat_lon_of_target(Φ1, λ1, α12, S):
     cosβ2 = (h**2 + (g * cos(δ) - sin(β1) * sin(δ))**2 )**0.5
 
     # (Equation A20) (geodetic latitude of target point, DDD)
-    Φ2 = atan( (a*sinβ2)/(b*cosβ2) ) * (180/π)
+    Φ2 = atan( (a*sinβ2)/(b*cosβ2) ) * 180/π
 
     # (Equation A21)
-    Δ = atan( (sin(δ)*sin(α12))/(cos(β1)*cos(δ)-sin(β1)*sin(δ)*cos(α12)) )
+    Δ = atan( (sin(δ)*sin(α))/(cos(β1)*cos(δ)-sin(β1)*sin(δ)*cos(α)) )
 
     # (Equation A22) (longitude of target point,DDD)
-    λ2 = (λ1+Δ+L) * (180/π)
+    λ2 = (λ+Δ+L) * 180/π
 
     print("Geodetic Latitde of Target Point: %s deg" % str(Φ2))
     print("Geodetic Longitude of Target Point: %s deg" % str(λ2))
@@ -277,64 +279,64 @@ S = 5000
 # where:
 # a = WGS-84 semi-major axis (3443.91846652 nmi)
 # b = WGS-84 semi-minor axis (3432.37165994 nmi)
-a = 3443.91846652
-b = 3432.37165994
-
-# (Equation A23)
-f = 1 - b/a
-
-# (Equation A24)
-L = λ2 - λ1
-
-# (Equation A25)
-β1 = atan( (b*sin(Φ1)) / (α12*cos(Φ1)) )
-
-# (Equation A26)
-β2 = atan( (b*sin(Φ2)) / (α12*cos(Φ2)) )
-
-# (Equation A27)
-A = sin(β1) * sin(β2)
-
-# (Equation A28)
-B = cos(β1) * cos(β2)
-
-# (Equation A29)
-cosδ = A + B * cos(L)
-
-# (Equation A30)
-n = (a-b)/(a+b)
-
-# (Equation A31)
-β2_β1 = (Φ2-Φ1) + 2 * (A * (n+n**2+n**3) - B * (n-n**2+n**3) ) * sin(Φ2-Φ1)
-
-# (Equation A32)
-sinδ = ( (sin(L)*cos(β2))**2 + ( sin(β2_β1) + 2 * cos(β2) * sin(β1) * sin(L/2)**2 )**2  )**0.5
-
-# (Equation A33)
-δ = atan(sinδ/cosδ) # evaluated in positive radians <= π
-
-# (Equation A34)
-c = B * sin(L) / sinδ
-
-# (Equation A35)
-m = 1-c*2
-
-# (Equation A36)
-one = δ * (1+f+f**2) + A * ( (f+f**2) * sin(δ) - (f**2 * δ**2)/(2*sin(δ)) )
-two = -(m/2) * ( (f+f**2) * (δ+sin(δ)*cos(δ)) - (f**2 * δ**2)/(tan(δ)) )
-three = -(A**2 * f**2/2) * sin(δ) * cos(δ)
-four = (f**2 * m**2/16) * (δ + sin(δ) * cos(δ) - 2 * sin(δ) * cos(δ)**3 - 8 * δ**2 / (tan(δ)) )
-five = (A**2 * m * f**2/2) * (sin(δ) * cos(δ) + δ + δ**2 / (sin(δ)) )
-S = b * (one + two + three + four + five)
-
-# (Equation A37)
-Λ = L + c * (δ * (f+f**2) - (A*f**2/2) * (sin(δ)+2*δ**2/(sin(δ))) + (m*f**2/4) * (sin(δ)*cos(δ)-5*δ+4*δ**2/(tan(δ)))  )
-
-# (Equation A38)
-α12 = atan( (cos(β2)*sin(Λ)) / (sin(β2_β1)+2*cos(β2)*sin(β1*sin(Λ/2)**2)) ) * (180/π)
-
-# (Equation A39)
-α21 = atan( (-cos(β1)*sin(Λ)) / (2*cos(β1)*sin(β2)*sin(Λ/2)**2-sin(β2_β1)) ) * (180/π)
+# a = 3443.91846652
+# b = 3432.37165994
+#
+# # (Equation A23)
+# f = 1 - b/a
+#
+# # (Equation A24)
+# L = λ2 - λ1
+#
+# # (Equation A25)
+# β1 = atan( (b*sin(Φ1)) / (α12*cos(Φ1)) )
+#
+# # (Equation A26)
+# β2 = atan( (b*sin(Φ2)) / (α12*cos(Φ2)) )
+#
+# # (Equation A27)
+# A = sin(β1) * sin(β2)
+#
+# # (Equation A28)
+# B = cos(β1) * cos(β2)
+#
+# # (Equation A29)
+# cosδ = A + B * cos(L)
+#
+# # (Equation A30)
+# n = (a-b)/(a+b)
+#
+# # (Equation A31)
+# β2_β1 = (Φ2-Φ1) + 2 * (A * (n+n**2+n**3) - B * (n-n**2+n**3) ) * sin(Φ2-Φ1)
+#
+# # (Equation A32)
+# sinδ = ( (sin(L)*cos(β2))**2 + ( sin(β2_β1) + 2 * cos(β2) * sin(β1) * sin(L/2)**2 )**2  )**0.5
+#
+# # (Equation A33)
+# δ = atan(sinδ/cosδ) # evaluated in positive radians <= π
+#
+# # (Equation A34)
+# c = B * sin(L) / sinδ
+#
+# # (Equation A35)
+# m = 1-c*2
+#
+# # (Equation A36)
+# one = δ * (1+f+f**2) + A * ( (f+f**2) * sin(δ) - (f**2 * δ**2)/(2*sin(δ)) )
+# two = -(m/2) * ( (f+f**2) * (δ+sin(δ)*cos(δ)) - (f**2 * δ**2)/(tan(δ)) )
+# three = -(A**2 * f**2/2) * sin(δ) * cos(δ)
+# four = (f**2 * m**2/16) * (δ + sin(δ) * cos(δ) - 2 * sin(δ) * cos(δ)**3 - 8 * δ**2 / (tan(δ)) )
+# five = (A**2 * m * f**2/2) * (sin(δ) * cos(δ) + δ + δ**2 / (sin(δ)) )
+# S = b * (one + two + three + four + five)
+#
+# # (Equation A37)
+# Λ = L + c * (δ * (f+f**2) - (A*f**2/2) * (sin(δ)+2*δ**2/(sin(δ))) + (m*f**2/4) * (sin(δ)*cos(δ)-5*δ+4*δ**2/(tan(δ)))  )
+#
+# # (Equation A38)
+# α12 = atan( (cos(β2)*sin(Λ)) / (sin(β2_β1)+2*cos(β2)*sin(β1*sin(Λ/2)**2)) ) * (180/π)
+#
+# # (Equation A39)
+# α21 = atan( (-cos(β1)*sin(Λ)) / (2*cos(β1)*sin(β2)*sin(Λ/2)**2-sin(β2_β1)) ) * (180/π)
 
 
 
@@ -376,7 +378,7 @@ LP = (ΦLP, λLP)
 # (iv) Select a flight azimuth.
 
 # α12 = Azimuth bearing from launch point (deg) = α12(DDD)·π/180 (radians per degree)
-αft = 110 * π/180
+αft = α12
 
 
 # (2) An applicant shall define and map an overflight exclusion zone using the following method:
@@ -389,7 +391,19 @@ Doez = OVERFLIGHT_EXCLUSION_ZONE_DOWNRANGE_DISTANCE[LV]
 
 ΦDoez, λDoez = lat_lon_of_target(LP[0], LP[1], αft, Doez)
 
-print(ΦDoez, λDoez)
+ΦCF, λCF = lat_lon_of_target(LP[0], LP[1], αft, 10)
+
+αc = αft - π/2
+αf = αft + π/2
+
+S = FLIGHT_CORRIDOR_LINE_SEGMENTS_LENGTH[LV]['CF']*0.5
+
+ΦC, λC = lat_lon_of_target(ΦCF * π/180, λCF * π/180, αc, S)
+ΦF, λF = lat_lon_of_target(ΦCF * π/180, λCF * π/180, αf, S)
+
+print(ΦF, λF)
+
+
 
 # (ii) An overflight exclusion zone is described by the intersection of the following boundaries, which are depicted in figure A–1:
 #
