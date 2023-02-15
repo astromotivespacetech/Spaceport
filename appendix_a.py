@@ -252,18 +252,13 @@ def lat_lon_of_target(Φ, λ, α, s):
     # (Equation A22) (longitude of target point,DDD)
     λ2 = (λ+Δ+L) * 180/π
 
-    print("Geodetic Latitde of Target Point: %s deg" % str(Φ2))
-    print("Geodetic Longitude of Target Point: %s deg" % str(λ2))
+    # print("Geodetic Latitde of Target Point: %s deg" % str(Φ2))
+    # print("Geodetic Longitude of Target Point: %s deg" % str(λ2))
 
     return Φ2, λ2
 
 
-Φ1 = 43.07961 * π/180
-λ1 = -119.94511 * π/180
-α12 = 105 * π/180
-S = 5000
 
-Φ2, λ2 = lat_lon_of_target(Φ1, λ1, α12, S)
 
 
 # (ii) To create latitude and longitude pairs on an ellipsoidal Earth model, an applicant shall use the following equations to
@@ -368,17 +363,22 @@ Dmax = DEBRIS_DISPERSION_RADUIS[LV]
 
 
 # Φ1 = Geodetic latitude of launch point (radians) = Φ1 (DDD)·π/180 (radians per degree)
-ΦLP = Φ1
+ΦLP = 43.07961 * π/180
 
 # λ1 = Longitude of launch point (DDD) = λ(DDD)·π/180 (radians per degree)
-λLP = λ1
+λLP = -119.94511 * π/180
 
-LP = (ΦLP, λLP)
 
 # (iv) Select a flight azimuth.
 
 # α12 = Azimuth bearing from launch point (deg) = α12(DDD)·π/180 (radians per degree)
-αft = α12
+αft = 105 * π/180
+
+αdmax = αft + π
+
+ΦDmax, λDmax = lat_lon_of_target(ΦLP, λLP, αdmax, Dmax)
+
+print(ΦDmax, λDmax)
 
 
 # (2) An applicant shall define and map an overflight exclusion zone using the following method:
@@ -389,19 +389,39 @@ LP = (ΦLP, λLP)
 
 Doez = OVERFLIGHT_EXCLUSION_ZONE_DOWNRANGE_DISTANCE[LV]
 
-ΦDoez, λDoez = lat_lon_of_target(LP[0], LP[1], αft, Doez)
+ΦDoez, λDoez = lat_lon_of_target(ΦLP, λLP, αft, Doez)
 
-ΦCF, λCF = lat_lon_of_target(LP[0], LP[1], αft, 10)
+ΦCF, λCF = lat_lon_of_target(ΦLP, λLP, αft, 10)
 
-αc = αft - π/2
-αf = αft + π/2
+αt = αft - π/2
+αb = αft + π/2
 
 S = FLIGHT_CORRIDOR_LINE_SEGMENTS_LENGTH[LV]['CF']*0.5
 
-ΦC, λC = lat_lon_of_target(ΦCF * π/180, λCF * π/180, αc, S)
-ΦF, λF = lat_lon_of_target(ΦCF * π/180, λCF * π/180, αf, S)
+ΦC, λC = lat_lon_of_target(ΦCF * π/180, λCF * π/180, αt, S)
+ΦF, λF = lat_lon_of_target(ΦCF * π/180, λCF * π/180, αb, S)
 
-print(ΦF, λF)
+
+ΦDE, λDE = lat_lon_of_target(ΦLP, λLP, αft, 100)
+
+S = FLIGHT_CORRIDOR_LINE_SEGMENTS_LENGTH[LV]['DE']*0.5
+
+ΦD, λD = lat_lon_of_target(ΦDE * π/180, λDE * π/180, αt, S)
+ΦE, λE = lat_lon_of_target(ΦDE * π/180, λDE * π/180, αb, S)
+
+
+# Flight trajectory
+ΦHI, λHI = lat_lon_of_target(ΦLP, λLP, αft, 5000)
+
+print(ΦHI, λHI)
+
+S = FLIGHT_CORRIDOR_LINE_SEGMENTS_LENGTH[LV]['HI']*0.5
+
+ΦH, λH = lat_lon_of_target(ΦHI * π/180, λHI * π/180, αt, S)
+ΦI, λI = lat_lon_of_target(ΦHI * π/180, λHI * π/180, αb, S)
+
+print(ΦH, λH)
+print(ΦI, λI)
 
 
 
