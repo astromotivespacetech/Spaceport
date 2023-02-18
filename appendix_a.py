@@ -1,7 +1,8 @@
-# Testing 
+# Testing
 
 # https://www.govinfo.gov/content/pkg/CFR-2012-title14-vol4/pdf/CFR-2012-title14-vol4-part420-appA.pdf
 
+# Local testing
 
 # ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– #
 # Table 1 of § 420.19  Orbital Expendable Launch Vehicle Classes by Payload Weight (lbs)
